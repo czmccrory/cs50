@@ -120,7 +120,7 @@ def shortest_path(source, target):
         neighbors = neighbors_for_person(node.state)
         for movie, actor in neighbors:
             if not actor in explored and not frontier.contains_state(actor):
-            child = Node(state=actor, parent=node, action=movie)
+                child = Node(state=actor, parent=node, action=movie)
                 # If node is the goal, then we have a solution
                 if child.state == target:
                     path = []
@@ -129,7 +129,7 @@ def shortest_path(source, target):
                         node = node.parent
                     path.reverse()
                     return path
-            frontier.add(child)
+                frontier.add(child)
 
 
 def person_id_for_name(name):
