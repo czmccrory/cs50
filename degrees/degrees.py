@@ -89,38 +89,48 @@ def main():
 
 
 def shortest_path(source, target):
+    # Keeps track of number of explored states
+    num_explored = 0
+
+    # Initializes frontier to the starting position
     start = Node(state=source, parent=None, action=None)
     frontier = QueueFrontier()
     frontier.add(start)
     
+    # Initializes an empty explored set
     explored = set()
-    explored_count = 0
 
+    # Continue looping until a solution is found
     while True:
 
         # If nothing left in the frontier, then no path
         if frontier.empty():
             return None
+        
+        # Choose a node from the frontier
         node = frontier.remove()
-        neighbors = neighbors_for_person(node.state)
+        num_explored += 1
 
+        # Get all people who starred with this person
+        neighbors = neighbors_for_person(node.state)
+        
+        # If the node is the goal, then return this as the solution
+        if node.state == target:
+            path = []
+            while node.parent is not None:
+                path.append((node.action, node.state))
+                node = node.parent
+            path.reverse()
+            return path
+        
+        # Add to the frontier
+        explored.add(node.state)
+
+        # Adds neighbors to frontier
         for movie, actor in neighbors:
-            if actor not in explored and not frontier.contains_state(actor):
+            if actor not in explored and not explored.contains_state(actor):
                 child = Node(state=actor, parent=node, action=movie)
                 frontier.add(child)
-                print(f" actor is {child.state} in movies {child.action}")
-                
-                if child.state == target:
-                    path = []
-                    while child.parent is not None:
-                        path.append((child.action, child.state))
-                        child = child.parent
-                    path.reverse()
-                    return path
-        
-            # node = frontier.remove()
-            explored_count += 1
-            explored.add(node.state)
 
 
 def person_id_for_name(name):
