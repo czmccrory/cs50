@@ -111,10 +111,6 @@ def shortest_path(source, target):
         
         # Choose a node from the frontier
         node = frontier.remove()
-        num_explored += 1
-        
-    # Mark node as explored
-        explored.add(node.state)
     
     # Add neighbors to frontier
         neighbors = neighbors_for_person(node.state)
@@ -130,6 +126,11 @@ def shortest_path(source, target):
                     path.reverse()
                     return path
                 frontier.add(child)
+
+        
+    # Mark node as explored
+        num_explored += 1
+        explored.add(node.state)
 
 
 def person_id_for_name(name):
