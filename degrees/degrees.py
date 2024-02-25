@@ -93,11 +93,9 @@ def shortest_path(source, target):
     frontier = QueueFrontier()
     frontier.add(start)
     
-    
     explored = set()
     explored_count = 0
 
-    
     while True:
 
         # If nothing left in the frontier, then no path
@@ -115,14 +113,15 @@ def shortest_path(source, target):
                 if child.state == target:
                     path = []
                     while child.parent is not None:
-                        path.append((child.action,child.state))
+                        path.append((child.action, child.state))
                         child = child.parent
                     path.reverse()
                     return path
         
-            #node = frontier.remove()
+            # node = frontier.remove()
             explored_count += 1
             explored.add(node.state)
+
 
 def person_id_for_name(name):
     """
